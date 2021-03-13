@@ -28,8 +28,9 @@
 
 
 	extern FlagsCtrlSystem flagsCtrlSystem;
-//	extern uint8_t datasFirebaseNumeric[LENGTH_PATH_NUMERIC];
+//	extern uint8_t datasFirebaseNumeric[LENGTH_DATA_EEPROM_NUMERIC];
 	extern uint8_t datasFirebaseNumeric[];
+	extern uint8_t datasFirebaseNumericLocal[];
 
 
 	extern void hardwareConfig();
@@ -39,5 +40,6 @@
 	extern void configurationWifi(uint8_t mode, uint8_t tryConnection);
 	extern bool firebaseConnection();
 	extern void communicationStatusMonitoring();
+	extern void loadVariablesControl();
 
 #endif /* _testEspFirebaseCallback_H_ */

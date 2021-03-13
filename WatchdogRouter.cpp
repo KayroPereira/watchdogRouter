@@ -30,21 +30,24 @@ void setup() {
 	hardwareConfig();
 	loadVariables();
 
+//	//TODO - Remover
+//	flagsCtrlSystem.flgBit.flgConfigurationEn = 1;
+
 	flagsCtrlSystem.flgBit.flgAuthenticationError = tryGetAuthentication();
 
-	flagsCtrlSystem.flgBit.flgDownloadDataEEPROM = downloadDataNumericEEPROM_8(ADDRESS_DATA_EEPROM_NUMERIC, LENGTH_DATA_EEPROM_NUMERIC, datasFirebaseNumeric);
+//	//TODO - Remover
+//	Serial.printf("\n-------------\nvalor default\n");
+//	for(int j = 0; j < LENGTH_DATA_EEPROM_NUMERIC; j++){
+//		Serial.printf("%s: %u\n", PATH_FIREBASE[LIST_DATA_EEPROM_NUMERIC[j]], datasFirebaseNumericLocal[j]);
+//	}
+//	Serial.printf("\n-------------\n");
+
+	flagsCtrlSystem.flgBit.flgDownloadDataEEPROM = downloadDataNumericEEPROM_8(ADDRESS_DATA_EEPROM_NUMERIC, LENGTH_DATA_EEPROM_NUMERIC, datasFirebaseNumericLocal);
+
+
 	if(flagsCtrlSystem.flgBit.flgDownloadDataEEPROM){
-
-		//TODO - corrigir
-		Serial.printf("\n\nDownloadEEPROM OK\n\n");
-//		loadVariablesControl();
+		loadVariablesControl();
 	}
-
-	Serial.printf("\n-------\n");
-	for(int j = 0; j < LENGTH_DATA_EEPROM_NUMERIC; j++){
-		Serial.printf("%s: %u\n", PATH_FIREBASE[LIST_DATA_EEPROM_NUMERIC[j]], datasFirebaseNumeric[j]);
-	}
-	Serial.printf("\n-------\n");
 
 	if(flagsCtrlSystem.flgBit.flgAuthenticationError){
 		configurationWifi(WIFI_STA, WAIT_COMM);
@@ -55,35 +58,6 @@ void setup() {
 	}else{
 		flagsCommunication.flgBit.flgDelayTryConnectionEn = 1;
 	}
-
-	Serial.println();
-	Serial.println();
-	if(flagsCtrlSystem.flgBit.flgAuthenticationError)
-		Serial.println("OK");
-	else
-		Serial.println("NOK");
-
-
-	//TODO adapatar para novos projetos
-//	if(downloadDataEEPROM()){
-//		loadVariablesControl();
-//	}
-
-
-//	if(false){
-//	WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-//	Serial.print("Connecting to Wi-Fi");
-//	while (WiFi.status() != WL_CONNECTED) {
-//		Serial.print(".");
-//		delay(300);
-//	}
-//	Serial.println();
-//	Serial.print("Connected with IP: ");
-//	Serial.println(WiFi.localIP());
-//	Serial.println();
-
-//	Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
-//	Firebase.reconnectWiFi(true);
 
 	//Set the size of WiFi rx/tx buffers in the case where we want to work with large data.
 	fbdo1.setBSSLBufferSize(1024, 1024);
@@ -184,6 +158,7 @@ int teste = 0;
 
 void loop() {
 
+//	errorFlags();
 
 //	//Caso exita falha na leitura da EEPROM na inicialização, tenta realizar uma nova atualização. Para de tentar quando consegui ler a EEPROM, ou até baixar os dados do Firebase
 //	if(!flagsCtrlGeral.flagsCtrlGeralBit.flgDownloadDataEEPROM && !flagsCtrlSystem.flgBit.flgSystemStart){
@@ -209,7 +184,7 @@ void loop() {
 
 	if(realTime - delayButton > 30){
 
-		jsonBuffer.set(PATH_FIREBASE[TIME_RESET], (int) realTime);
+		jsonBuffer.set(PATH_FIREBASE[TIME_HARD_RESET], (int) realTime);
 
 		if(teste++ >= 100){
 			sendDataFirebase = true;
@@ -249,7 +224,7 @@ void loop() {
 	if (realTime - sendDataPrevMillis > 15000) {
 
 
-		digitalWrite(OUTPUT_ERRO_LED, !digitalRead(OUTPUT_ERRO_LED));
+//		digitalWrite(OUTPUT_ERRO_LED, !digitalRead(OUTPUT_ERRO_LED));
 
 		sendDataPrevMillis = millis();
 		count++;

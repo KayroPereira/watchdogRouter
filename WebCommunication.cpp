@@ -15,12 +15,11 @@ uint8_t regDelayTryConnection		= DELAY_TRY_CONNECTION,				//tempo para tentar um
 		contCommunicationFailure 	= COUNT_COMM_FAILURE;
 
 
-uint8_t datasFirebaseNumeric[LENGTH_DATA_EEPROM_NUMERIC] = {VALUE_ERRO, VALUE_FAVORITE, VALUE_HARD_RESET, VALUE_TIME_RESET};
-//
-//uint8_t failureCount = 0,
-//		contCommunicationFailure = COUNT_COMM_FAILURE;
-//
-const char *ssidAP = "HomeManager";
+
+uint8_t datasFirebaseNumeric[LENGTH_DATA_EEPROM_NUMERIC] = {VALUE_ERRO, VALUE_FAVORITE, VALUE_HARD_RESET, VALUE_TIME_HARD_RESET},
+		datasFirebaseNumericLocal[LENGTH_DATA_EEPROM_NUMERIC];
+
+const char *ssidAP = "WatchdogRouter";
 const char *passwordAP = "";
 
 
@@ -33,7 +32,7 @@ void configVariableControlCommunication(bool value){
 
 	flagsCtrlSystem.flgBit.flgCommunicationOk = value;
 //	flagsCtrlSystem.flgBit.flgRestarWifi = !value;
-	flagsCtrlSystem.flgBit.flgSystemStart = value;
+//	flagsCtrlSystem.flgBit.flgSystemStart = value;
 	flagsCommunication.flgBit.flgDelayTryConnectionEn = !value;
 
 	flagsCommunication.flgBit.flgDelayTryConnectionOk = 0;
@@ -63,15 +62,17 @@ void configurationWifi(uint8_t mode, uint8_t tryConnection){
 
 			while (WiFi.status() != WL_CONNECTED && attempt <= tryConnection) {
 				attempt++;
+				Serial.print(".");
 //				updateErrorFlag();
 				_delay(BASETIME_2);
 			}
+			Serial.println();
 
 			if(attempt < tryConnection){								//true se conexão bem sucedida
 				configVariableControlCommunication(true);
 
 				flagsCommunication.flgBit.flgTryingConnection = 1;		//habilita a verificacao após a interrupcão se a conexão for bem sucedida
-
+				flagsCtrlSystem.flgBit.flgSystemStart = 1;
 				WiFi.setAutoReconnect(true);
 			}
 			else{
@@ -324,6 +325,7 @@ bool tryGetAuthentication(){
 ////
 ////	flagsCommunication.flgBit.flgAuthenticationError = tryGetAuthentication();
 ////
+////	flagsCtrlSystem.flgBit.flgSystemStart = 0;	// <- verificar
 ////	configurationWifi(WIFI_STA, WAIT_COMM);
 ////	firebaseConnection();
 ////
@@ -379,6 +381,10 @@ void communicationStatusMonitoring(){
 					flagsCommunication.flgBit.flgDelayTryConnectionOk = 0;
 
 					configurationWifi(WIFI_STA, WAIT_COMM_FAST);
+
+					if (flagsCtrlSystem.flgBit.flgCommunicationOk){
+						firebaseConnection();
+					}
 				}
 			}
 		}

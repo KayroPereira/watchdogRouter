@@ -24,6 +24,8 @@
 //
 			unsigned flgDelayTryConnectionEn	: 1;
 			unsigned flgDelayTryConnectionOk	: 1;
+
+			unsigned flgSendErrorFirebase		: 1;
 //
 //			unsigned flgReceivedData	  		: 1;
 //			unsigned flgStuckDataFirebase		: 1;
@@ -35,8 +37,6 @@
 
 	#include "HardwareAccess.h"
 
-
-	#define DELAY_TRY_CONNECTION	60						//trocar para 60
 
 ////	#include "FirebaseArduino.h"
 ////	#include <ESP8266WebServer.h>
@@ -56,13 +56,13 @@
 
 	//base timer
 //	#define FAILURE_DB					10
-	#define WAIT_COMM					30
+	#define WAIT_COMM					20						//trocar para 30
 	#define WAIT_COMM_FAST				3						//trocar para 3 - possivelmente
 //	#define DELAY_GET_FIREBASE_1M		60						//trocar para 60
 //
 //	#define DELAY_GET_FIREBASE_1M		60						//trocar para 60
 //
-	#define DELAY_TRY_CONNECTION		60						//trocar para 60
+	#define DELAY_TRY_CONNECTION		1						//trocar para 60 - Tempo para tentar uma nova conexão
 	#define COUNT_COMM_FAILURE			30						//Mudar para 60 -> testando com 30 para melhor otimização
 
 
@@ -73,7 +73,7 @@
 	#define ERRO 						3						//erro
 	#define FAVORITE					4						//flag - equipamento favorito - utilizado no dashboard
 	#define HARD_RESET					5						//flag - reset remoto
-	#define TIME_RESET					6						//tempo máximo para reset local em caso de falha
+	#define TIME_HARD_RESET				6						//tempo máximo para reset local em caso de falha
 
 
 	//Valores default
@@ -83,7 +83,7 @@
 	#define VALUE_ERRO 					0						//Valor default erro
 	#define VALUE_FAVORITE				0						//Valor default
 	#define VALUE_HARD_RESET			0						//Valor default
-	#define VALUE_TIME_RESET			10						//Valor default para realização de reset local
+	#define VALUE_TIME_HARD_RESET		10						//Valor default para realização de reset local
 
 
 //	#define LENGTH_PATH_NUMERIC			4
@@ -102,7 +102,7 @@
 //	#define LENGTH_DATA_EEPROM_NUMERIC			10				//Quatro dados serão salvos - erro - favorite - hardReset - timeReset + #AA -> este valor confirma a leitura correta
 
 	const char PATH_FIREBASE[][SIZE_PATH_TEXT] = {"alias", "dns1", "dns2", "erro", "favorite", "hardReset", "timeReset"};					//labels Firebase
-	const uint8_t LIST_DATA_EEPROM_NUMERIC[] = {ERRO, FAVORITE, HARD_RESET, TIME_RESET};													//Dados numéricos salvos na EEPROM
+	const uint8_t LIST_DATA_EEPROM_NUMERIC[] = {ERRO, FAVORITE, HARD_RESET, TIME_HARD_RESET};												//Dados numéricos salvos na EEPROM
 	const uint8_t LIST_DATA_EEPROM_TEXT[] = {ALIAS, DNS1, DNS2};																			//Dados literais salvos na EEPROM
 
 

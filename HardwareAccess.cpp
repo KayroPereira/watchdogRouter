@@ -11,16 +11,16 @@ FlagsCtrlSystem flagsCtrlSystem;
 
 os_timer_t tmr0;
 
-int 	errorOld = -1,
-		regDelayRearm = 0;										//tempo para reniciar o ciclo - Após o poço secar;
+//int 	errorOld = -1,
+//		regDelayRearm = 0;										//tempo para reniciar o ciclo - Após o poço secar;
 
 uint8_t		regDelay1s              	= REC_DELAY_1S,
-			regDelay1Min				= REC_DELAY_1M;
-
+			regDelay1Min				= REC_DELAY_1M,
+			regDelayHardReset			= VALUE_TIME_HARD_RESET,			//tempo para entre o acionamento da bomba e a chegada da água no reservatório
 //			regDelayButtonConfig     	= DELAY_TIME_BUTTON_CONFIG,
 //			regDelayDebounce			= DELAY_DEBOUNCE,
-//			regBaseDelayError 			= 0,
-//			regDelayError	 			= 0,
+			regDelayError	 			= 0,
+			regBaseDelayError 			= 0;
 //			regDelayConfiguration		= DELAY_TIMER_CONFIGURATION,
 //			regDelayFirebaseMin			= DELAY_GET_FIREBASE_1M,
 //			regDelayFirebase        	= DELAY_GET_FIREBASE,
@@ -63,6 +63,26 @@ void hardwareConfig(){
 }
 
 void Timer_0 (void*){
+
+	//#Error Flags Start
+	if (flagsCtrlSystem.flgBit.flgErrorFlagsEn){
+		if (flagsCtrlSystem.flgBit.flgErrorFlagsStartStop){
+			if (!--regDelayError){
+				regDelayError = regBaseDelayError;
+				flagsCtrlSystem.flgBit.flgRefreshLedError = 1;
+			}
+		}
+
+//		if (flagsCtrlSystem.flgBit.flgErrorFlagsStartStop){
+//			if (!--regDelayError){
+//				flagsCtrlSystem.flgBit.flgRefreshLedError = 1;
+//				regDelayError = regBaseDelayError;
+//			}
+//		}else{
+//			flagsCtrlSystem.flgBit.flgRefreshLedError = 1;
+//		}
+	}
+	//#Error Flags End
 
 	//#Controle de tempo sequência de teste Início
 	if (!--regDelay1s){
@@ -136,6 +156,7 @@ void Timer_0 (void*){
 //			//#Tempo sem detectar pulsos - Fim
 //		}
 	}
+	errorFlags();
 }
 
 
@@ -145,12 +166,16 @@ void _pinMode(uint8_t pin, uint8_t mode){
 	pinMode(pin, mode);
 }
 
-void _delay(int temp){
-	delay(temp);
+void swapPin(int8_t pin){
+	digitalWrite(pin, !digitalRead(pin));
 }
 
 void changeOutput(uint8_t pin, uint8_t status){
 	digitalWrite(pin, status);
+}
+
+void _delay(int temp){
+	delay(temp);
 }
 
 void _delayMicroseconds(unsigned int delay){

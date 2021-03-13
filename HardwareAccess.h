@@ -40,6 +40,13 @@
 //
 //			unsigned flgReceivedData	  		: 1;
 //			unsigned flgStuckDataFirebase		: 1;
+
+			unsigned flgRefreshLedError				: 1;
+			unsigned flgErrorFlagsEn				: 1;
+			unsigned flgErrorFlagsStartStop			: 1;
+
+			unsigned flgConfigurationEn				: 1;
+			unsigned flgConfigurationOk				: 1;
 		}flgBit;
 
 		unsigned int flgByte;
@@ -119,6 +126,19 @@ typedef union {
 	#define LENGTH_PASSWORD				35
 
 
+	//flags error
+	#define ERROR_CLEAR					0
+	#define ERROR_AUTHENTICATON			1
+	#define ERROR_COMM					2
+	#define MODE_CONFIGURATION			4
+
+	//base times error
+	#define DELAY_ERROR_AUTHENTICATON	50
+	#define DELAY_ERROR_COMM			100
+	#define DELAY_MODE_CONFIGURATION	10
+	#define DELAY_ERR_GENERIC			200
+
+
 	//base times
 	#define REC_DELAY_1S                100    	//Base de tempo 1s colocar em 100
 	#define REC_DELAY_1M                60    	//Base de tempo 1min colocar em 60
@@ -143,5 +163,6 @@ typedef union {
 
 
 	extern bool wifiConnectionStatus();
+	extern void errorFlags();
 
 #endif /* HARDWAREACCESS_H_ */
