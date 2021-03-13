@@ -35,7 +35,7 @@
 	extern void hardwareConfig();
 	extern void loadVariables();
 	extern bool tryGetAuthentication();
-	extern bool downloadDataEEPROM_8(uint8_t address, uint8_t len, uint8_t *back);
+	extern bool downloadDataNumericEEPROM_8(uint8_t address, uint8_t len, uint8_t *back);
 	extern void configurationWifi(uint8_t mode, uint8_t tryConnection);
 	extern bool firebaseConnection();
 	extern void communicationStatusMonitoring();

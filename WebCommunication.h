@@ -86,7 +86,7 @@
 	#define VALUE_TIME_RESET			10						//Valor default para realização de reset local
 
 
-	#define LENGTH_PATH_NUMERIC			4
+//	#define LENGTH_PATH_NUMERIC			4
 	#define LENGTH_PATH_TEXT			3
 	#define SIZE_PATH_TEXT				10
 
@@ -96,7 +96,7 @@
 	//configuration and address EEPROM
 	#define ADDRESS_DATA_EEPROM_NUMERIC			100				//Inicio dos dados numéricos na EEPROM
 	#define ADDRESS_DATA_EEPROM_TEXT			110				//Inicio dos dados texto na EEPROM
-	#define LENGTH_DATA_EEPROM_NUMERIC			5				//Quatro dados serão salvos - erro - favorite - hardReset - timeReset + #AA -> este valor confirma a leitura correta
+	#define LENGTH_DATA_EEPROM_NUMERIC			4				//Quatro dados serão salvos - erro - favorite - hardReset - timeReset + #AA -> este valor confirma a leitura correta
 
 	//TODO - definir para texto
 //	#define LENGTH_DATA_EEPROM_NUMERIC			10				//Quatro dados serão salvos - erro - favorite - hardReset - timeReset + #AA -> este valor confirma a leitura correta

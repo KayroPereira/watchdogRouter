@@ -32,11 +32,19 @@ void setup() {
 
 	flagsCtrlSystem.flgBit.flgAuthenticationError = tryGetAuthentication();
 
-	flagsCtrlSystem.flgBit.flgDownloadDataEEPROM = downloadDataEEPROM_8(ADDRESS_DATA_EEPROM_NUMERIC, LENGTH_PATH_NUMERIC, datasFirebaseNumeric);
+	flagsCtrlSystem.flgBit.flgDownloadDataEEPROM = downloadDataNumericEEPROM_8(ADDRESS_DATA_EEPROM_NUMERIC, LENGTH_DATA_EEPROM_NUMERIC, datasFirebaseNumeric);
 	if(flagsCtrlSystem.flgBit.flgDownloadDataEEPROM){
+
 		//TODO - corrigir
+		Serial.printf("\n\nDownloadEEPROM OK\n\n");
 //		loadVariablesControl();
 	}
+
+	Serial.printf("\n-------\n");
+	for(int j = 0; j < LENGTH_DATA_EEPROM_NUMERIC; j++){
+		Serial.printf("%s: %u\n", PATH_FIREBASE[LIST_DATA_EEPROM_NUMERIC[j]], datasFirebaseNumeric[j]);
+	}
+	Serial.printf("\n-------\n");
 
 	if(flagsCtrlSystem.flgBit.flgAuthenticationError){
 		configurationWifi(WIFI_STA, WAIT_COMM);

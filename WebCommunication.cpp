@@ -15,7 +15,7 @@ uint8_t regDelayTryConnection		= DELAY_TRY_CONNECTION,				//tempo para tentar um
 		contCommunicationFailure 	= COUNT_COMM_FAILURE;
 
 
-uint8_t datasFirebaseNumeric[LENGTH_PATH_NUMERIC] = {VALUE_ERRO, VALUE_FAVORITE, VALUE_HARD_RESET, VALUE_TIME_RESET};
+uint8_t datasFirebaseNumeric[LENGTH_DATA_EEPROM_NUMERIC] = {VALUE_ERRO, VALUE_FAVORITE, VALUE_HARD_RESET, VALUE_TIME_RESET};
 //
 //uint8_t failureCount = 0,
 //		contCommunicationFailure = COUNT_COMM_FAILURE;

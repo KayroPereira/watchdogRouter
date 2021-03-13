@@ -160,11 +160,26 @@ void _delayMicroseconds(unsigned int delay){
 
 //Functions EEPROM
 
+void write_8(int address, uint8_t value){
+	EEPROM.write(address, value);
+	EEPROM.commit();
+}
+
 void readVetor_8 (int address, uint8_t *data, uint8_t length){
 
-	for (int i = 0; i < length; i++){
+	for (uint8_t i = 0; i < length; i++){
 		*(data + i) = EEPROM.read(address+i);
 	}
+}
+
+size_t writeVetor_8 (int address, uint8_t *vetor, uint8_t length){
+
+	for(uint8_t i = 0; i < length; i++){
+		write_8(address+i, *(vetor+i));
+	}
+	EEPROM.commit();
+
+	return length;
 }
 
 String readString (int address, uint8_t length){

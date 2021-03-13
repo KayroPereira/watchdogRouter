@@ -40,7 +40,13 @@ void loadVariables(){
 //	copyVetorInt(datasFirebaseLocal, datasFirebase, LENGTH_PATH);							//Iguala os dados dos vetores Local <-> Firebase - O vetor Firebase é iniciado com dados padrão
 
 //	loadVariablesControl();
+
+	//TODO - Remover usado para teste inicial
+//	uint8_t startTemp[LENGTH_DATA_EEPROM_NUMERIC] = {12, 14, 16, 18};
+//	updateDataNumericEEPROM_8(ADDRESS_DATA_EEPROM_NUMERIC, startTemp, LENGTH_DATA_EEPROM_NUMERIC);
+
 }
+
 
 bool getDataDefaultEEPROM_8(uint16_t address, uint8_t *vetor, uint8_t len){
 
@@ -49,21 +55,28 @@ bool getDataDefaultEEPROM_8(uint16_t address, uint8_t *vetor, uint8_t len){
 	return vetor[len-1] == 0x0AA ? true : false;
 }
 
+void updateDataNumericEEPROM_8(uint16_t address, uint8_t *vetor, uint8_t len){
+
+	uint8_t listEEPROM[len+1];
+
+	for(int i = 0; i < len; i++){
+		listEEPROM[i] = *(vetor+i);
+	}
+
+	*(listEEPROM+len) = 0x0AA;
+
+	writeVetor_8(address, listEEPROM, len+1);
+}
+
 //bool downloadDataEEPROM_8(uint16_t address, uint8_t len, uint8_t &back){
-bool downloadDataEEPROM_8(uint8_t address, uint8_t len, uint8_t *back){
+bool downloadDataNumericEEPROM_8(uint8_t address, uint8_t len, uint8_t *back){
 
-//	uint8_t dataTemp[LENGTH_DATA_EEPROM];
-	uint8_t dataTemp[len];
+	uint8_t dataTemp[len+1];
 
-	if(getDataDefaultEEPROM_8(address, dataTemp, len)){
+	if(getDataDefaultEEPROM_8(address, dataTemp, len+1)){
 
-		for(int i = 0; i < len-1; i++){														//Descarta o último dado, devido ser apenas de verificação
+		for(int i = 0; i < len; i++){														//Descarta o último dado, devido ser apenas de verificação
 			*(back+i) = *(dataTemp+i);
-			Serial.println("-------");
-			Serial.println(*(back+i));
-			Serial.println(*(dataTemp+i));
-			Serial.println("-------");
-//			datasFirebaseLocal[LIST_DATA_EEPROM[i]] = dataTemp[i];
 		}
 
 		return true;
