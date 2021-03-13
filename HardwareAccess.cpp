@@ -11,8 +11,6 @@ FlagsCtrlSystem flagsCtrlSystem;
 
 os_timer_t tmr0;
 
-//int 	errorOld = -1,
-//		regDelayRearm = 0;										//tempo para reniciar o ciclo - Após o poço secar;
 
 uint8_t		regDelay1s              	= REC_DELAY_1S,
 			regDelay1Min				= REC_DELAY_1M,

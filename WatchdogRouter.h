@@ -31,6 +31,8 @@
 //	extern uint8_t datasFirebaseNumeric[LENGTH_DATA_EEPROM_NUMERIC];
 	extern uint8_t datasFirebaseNumeric[];
 	extern uint8_t datasFirebaseNumericLocal[];
+	extern FirebaseData fbdo1;
+	extern FirebaseData fbdo2;
 
 
 	extern void hardwareConfig();

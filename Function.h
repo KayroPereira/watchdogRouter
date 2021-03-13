@@ -27,6 +27,7 @@
 	extern uint8_t regDelayError;
 
 
+	extern void loadVariablesCommunication();
 	extern void readVetor_8 (int address, uint8_t *data, uint8_t length);
 	extern size_t writeVetor_8 (int address, uint8_t *vetor, uint8_t length);
 	extern void swapPin(int8_t pin);

@@ -3,8 +3,8 @@
 FlagsCtrlGeral flagsCtrlGeral;
 
 //Define FirebaseESP8266 data object
-FirebaseData fbdo1;
-FirebaseData fbdo2;
+//FirebaseData fbdo1;
+//FirebaseData fbdo2;
 
 FirebaseJson jsonBuffer;
 
@@ -59,17 +59,17 @@ void setup() {
 		flagsCommunication.flgBit.flgDelayTryConnectionEn = 1;
 	}
 
-	//Set the size of WiFi rx/tx buffers in the case where we want to work with large data.
-	fbdo1.setBSSLBufferSize(1024, 1024);
-
-	//Set the size of HTTP response buffers in the case where we want to work with large data.
-	fbdo1.setResponseSize(1024);
-
-	//Set the size of WiFi rx/tx buffers in the case where we want to work with large data.
-	fbdo2.setBSSLBufferSize(1024, 1024);
-
-	//Set the size of HTTP response buffers in the case where we want to work with large data.
-	fbdo2.setResponseSize(1024);
+//	//Set the size of WiFi rx/tx buffers in the case where we want to work with large data.
+//	fbdo1.setBSSLBufferSize(1024, 1024);
+//
+//	//Set the size of HTTP response buffers in the case where we want to work with large data.
+//	fbdo1.setResponseSize(1024);
+//
+//	//Set the size of WiFi rx/tx buffers in the case where we want to work with large data.
+//	fbdo2.setBSSLBufferSize(1024, 1024);
+//
+//	//Set the size of HTTP response buffers in the case where we want to work with large data.
+//	fbdo2.setResponseSize(1024);
 
 	if (!Firebase.beginStream(fbdo1, path)) {
 		Serial.println("------------------------------------");

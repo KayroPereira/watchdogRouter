@@ -7,14 +7,14 @@
 
 #include "WebCommunication.h"
 
-
 FlagsCommunication flagsCommunication;
+
+FirebaseData fbdo1;
+FirebaseData fbdo2;
 
 uint8_t regDelayTryConnection		= DELAY_TRY_CONNECTION,				//tempo para tentar uma nova conexão com a internet, caso não tenha efetuada uma primeira conexão
 //		failureCount = 0,
 		contCommunicationFailure 	= COUNT_COMM_FAILURE;
-
-
 
 uint8_t datasFirebaseNumeric[LENGTH_DATA_EEPROM_NUMERIC] = {VALUE_ERRO, VALUE_FAVORITE, VALUE_HARD_RESET, VALUE_TIME_HARD_RESET},
 		datasFirebaseNumericLocal[LENGTH_DATA_EEPROM_NUMERIC];
@@ -25,6 +25,23 @@ const char *passwordAP = "";
 
 String	ssidST	= "",
 		passwordST = "";
+
+
+void loadVariablesCommunication(){
+
+	//Set the size of WiFi rx/tx buffers in the case where we want to work with large data.
+	fbdo1.setBSSLBufferSize(1024, 1024);
+
+	//Set the size of HTTP response buffers in the case where we want to work with large data.
+	fbdo1.setResponseSize(1024);
+
+	//Set the size of WiFi rx/tx buffers in the case where we want to work with large data.
+	fbdo2.setBSSLBufferSize(1024, 1024);
+
+	//Set the size of HTTP response buffers in the case where we want to work with large data.
+	fbdo2.setResponseSize(1024);
+}
+
 
 void configVariableControlCommunication(bool value){
 

@@ -14,6 +14,8 @@ void loadVariables(){
 	flagsCtrlSystem.flgByte = 0;
 	flagsCommunication.flgByte = 0;
 
+	loadVariablesCommunication();
+
 //	flagsCtrlGeral.flagsCtrlGeralByte = 0;
 //	flagsCommunication.flgByte = 0;
 //
