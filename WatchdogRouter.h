@@ -4,6 +4,7 @@
 
 	#include "HardwareAccess.h"
 	#include "WebCommunication.h"
+	#include "FirebaseFunctions.h"
 
 //	#define LED_2			2			//GPIO2	-	D4
 //
@@ -43,5 +44,9 @@
 	extern bool firebaseConnection();
 	extern void communicationStatusMonitoring();
 	extern void loadVariablesControl();
+
+
+	//TODO - Remover
+	extern bool updateFirebase(FirebaseData &fbdo, String path, FirebaseJson &json);
 
 #endif /* _testEspFirebaseCallback_H_ */

@@ -5,8 +5,8 @@
  *      Author: kayro
  */
 
-#ifndef FUNCTION_H_
-	#define FUNCTION_H_
+#ifndef FUNCTIONS_H_
+	#define FUNCTIONS_H_
 
 	#include "HardwareAccess.h"
 	#include "WebCommunication.h"
@@ -27,7 +27,7 @@
 	extern uint8_t regDelayError;
 
 
-	extern void loadVariablesCommunication();
+	extern void loadVariablesFirebase();
 	extern void readVetor_8 (int address, uint8_t *data, uint8_t length);
 	extern size_t writeVetor_8 (int address, uint8_t *vetor, uint8_t length);
 	extern void swapPin(int8_t pin);
@@ -35,4 +35,4 @@
 
 
 
-#endif /* FUNCTION_H_ */
+#endif /* FUNCTIONS_H_ */

@@ -5,7 +5,7 @@
  *      Author: kayro
  */
 
-#include "Function.h"
+#include "Functions.h"
 
 int 	errorOld = -1;
 
@@ -14,7 +14,7 @@ void loadVariables(){
 	flagsCtrlSystem.flgByte = 0;
 	flagsCommunication.flgByte = 0;
 
-	loadVariablesCommunication();
+	loadVariablesFirebase();
 
 //	flagsCtrlGeral.flagsCtrlGeralByte = 0;
 //	flagsCommunication.flgByte = 0;
@@ -94,7 +94,7 @@ void clearFlagsErroLocal(){
 
 void errorFlags(){
 
-	uint8_t error = -1;
+	sint8_t error = -1;
 
 	if (flagsCtrlSystem.flgBit.flgConfigurationEn){
 		error = MODE_CONFIGURATION;

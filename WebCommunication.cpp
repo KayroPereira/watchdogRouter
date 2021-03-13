@@ -9,8 +9,6 @@
 
 FlagsCommunication flagsCommunication;
 
-FirebaseData fbdo1;
-FirebaseData fbdo2;
 
 uint8_t regDelayTryConnection		= DELAY_TRY_CONNECTION,				//tempo para tentar uma nova conexão com a internet, caso não tenha efetuada uma primeira conexão
 //		failureCount = 0,
@@ -26,21 +24,6 @@ const char *passwordAP = "";
 String	ssidST	= "",
 		passwordST = "";
 
-
-void loadVariablesCommunication(){
-
-	//Set the size of WiFi rx/tx buffers in the case where we want to work with large data.
-	fbdo1.setBSSLBufferSize(1024, 1024);
-
-	//Set the size of HTTP response buffers in the case where we want to work with large data.
-	fbdo1.setResponseSize(1024);
-
-	//Set the size of WiFi rx/tx buffers in the case where we want to work with large data.
-	fbdo2.setBSSLBufferSize(1024, 1024);
-
-	//Set the size of HTTP response buffers in the case where we want to work with large data.
-	fbdo2.setResponseSize(1024);
-}
 
 
 void configVariableControlCommunication(bool value){
@@ -77,6 +60,8 @@ void configurationWifi(uint8_t mode, uint8_t tryConnection){
 
 			flagsCommunication.flgBit.flgTryingConnection = 0;			//desabilita a verificacao durante a interrupcao
 
+			Serial.println();
+			Serial.print("Connecting");
 			while (WiFi.status() != WL_CONNECTED && attempt <= tryConnection) {
 				attempt++;
 				Serial.print(".");
@@ -149,31 +134,41 @@ bool wifiConnectionStatus(){
 //	}
 }
 
-bool firebaseConnection(){
-
-	//Iniciar Firebase
-	Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
-	Firebase.reconnectWiFi(true);
-
-	//TODO - Implementar mais tarde
-//	if(firebaseCommStatus()){
+//bool firebaseConnection(){
 //
-//		changeFlagsCommunicationFirebase(true);
+//	//Iniciar Firebase
+//	Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
+//	Firebase.reconnectWiFi(true);
 //
-//		getDataFirebase(DEFAULT_PATH, ALL_OBJECT_PATH, DATA_GLOBAL);		//pega dados Firebase
-//		_delay(DELAY_FAST_SWITCHING);
-//
-//		Firebase.stream(DEFAULT_PATH); 										//Enter mode of verification by event
-//
-//		flagsCommunication.flgBit.flgGetFirebaseDelay = 1;
-//
-//	} else {
-//		changeFlagsCommunicationFirebase(false);
-//		return false;
+//	if (!Firebase.beginStream(fbdo1, MAC_DEVICE)) {
+//		Serial.println("------------------------------------");
+//		Serial.println("Can't begin stream connection...");
+//		Serial.println("REASON: " + fbdo1.errorReason());
+//		Serial.println("------------------------------------");
+//		Serial.println();
 //	}
-
-	return true;
-}
+//
+//	Firebase.setStreamCallback(fbdo1, streamCallback, streamTimeoutCallback);
+//
+//	//TODO - Implementar mais tarde
+////	if(firebaseCommStatus()){
+////
+////		changeFlagsCommunicationFirebase(true);
+////
+////		getDataFirebase(DEFAULT_PATH, ALL_OBJECT_PATH, DATA_GLOBAL);		//pega dados Firebase
+////		_delay(DELAY_FAST_SWITCHING);
+////
+////		Firebase.stream(DEFAULT_PATH); 										//Enter mode of verification by event
+////
+////		flagsCommunication.flgBit.flgGetFirebaseDelay = 1;
+////
+////	} else {
+////		changeFlagsCommunicationFirebase(false);
+////		return false;
+////	}
+//
+//	return true;
+//}
 
 //void splitDataBase(FirebaseObject *obj){
 //
