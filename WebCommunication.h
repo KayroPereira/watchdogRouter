@@ -25,7 +25,7 @@
 			unsigned flgDelayTryConnectionEn	: 1;
 			unsigned flgDelayTryConnectionOk	: 1;
 
-			unsigned flgSendErrorFirebase		: 1;
+//			unsigned flgSendErrorFirebase		: 1;
 //
 //			unsigned flgReceivedData	  		: 1;
 //			unsigned flgStuckDataFirebase		: 1;

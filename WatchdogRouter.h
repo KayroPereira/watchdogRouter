@@ -29,6 +29,7 @@
 
 
 	extern FlagsCtrlSystem flagsCtrlSystem;
+	extern FlagsFirebase flagsFirebase;
 //	extern uint8_t datasFirebaseNumeric[LENGTH_DATA_EEPROM_NUMERIC];
 	extern uint8_t datasFirebaseNumeric[];
 	extern uint8_t datasFirebaseNumericLocal[];
@@ -44,6 +45,7 @@
 	extern bool firebaseConnection();
 	extern void communicationStatusMonitoring();
 	extern void loadVariablesControl();
+	extern void sendDataFirebase();
 
 
 	//TODO - Remover

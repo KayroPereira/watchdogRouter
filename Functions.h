@@ -18,10 +18,12 @@
 
 
 	extern FlagsCtrlSystem flagsCtrlSystem;
-//	extern uint8_t datasFirebaseNumeric[LENGTH_DATA_EEPROM_NUMERIC];
-//	extern uint8_t datasFirebaseNumericLocal[LENGTH_DATA_EEPROM_NUMERIC];
+	extern FlagsFirebase flagsFirebase;
+	extern FirebaseData fbdo2;
+	extern FirebaseJson jsonBuffer;
 	extern uint8_t datasFirebaseNumeric[];
 	extern uint8_t datasFirebaseNumericLocal[];
+	extern int	datasFirebaseNumericSend[];
 	extern uint8_t regDelayHardReset;
 	extern uint8_t regBaseDelayError;
 	extern uint8_t regDelayError;
@@ -32,6 +34,8 @@
 	extern size_t writeVetor_8 (int address, uint8_t *vetor, uint8_t length);
 	extern void swapPin(int8_t pin);
 	extern void changeOutput(uint8_t pin, uint8_t status);
+	extern void addDataBufferFirebase(const String path, int value);
+	extern bool updateFirebase(FirebaseData &fbdo, String path, FirebaseJson &json);
 
 
 

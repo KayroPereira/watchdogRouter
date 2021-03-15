@@ -13,6 +13,7 @@ void loadVariables(){
 
 	flagsCtrlSystem.flgByte = 0;
 	flagsCommunication.flgByte = 0;
+	flagsFirebase.flgByte = 0;
 
 	loadVariablesFirebase();
 
@@ -41,7 +42,7 @@ void loadVariables(){
 
 //	configVariableControlCommunication(false);												//define os flags de controle da comunicação com falha
 //
-	copyVetor_8(datasFirebaseNumericLocal, datasFirebaseNumeric, LENGTH_DATA_EEPROM_NUMERIC);		//Iguala os dados dos vetores Local <-> Firebase - O vetor Firebase é iniciado com dados padrão
+	copyVetor_8(datasFirebaseNumericLocal, datasFirebaseNumeric, LENGTH_DATA_NUMERIC_EEPROM);		//Iguala os dados dos vetores Local <-> Firebase - O vetor Firebase é iniciado com dados padrão
 
 //	loadVariablesControl();
 
@@ -90,6 +91,31 @@ void clearFlagsErroLocal(){
 	flagsCtrlSystem.flgBit.flgRefreshLedError = 0;
 
 	changeOutput(OUTPUT_ERRO_LED, HIGH);
+}
+
+void sendDataFirebase(){
+
+	if(flagsFirebase.flgBit.flgAddDataSendFirebase){
+		flagsFirebase.flgBit.flgAddDataSendFirebase = 0;
+
+		for(uint8_t i = 0; i < LENGTH_DATA_FIREASE_NUMERIC_SEND; i++){
+			if(datasFirebaseNumericSend[i] > -1){
+				addDataBufferFirebase(PATH_FIREBASE[LIST_PATH_NUMERIC_SEND[i]], datasFirebaseNumericSend[i]);
+			}
+		}
+	}
+
+	if(flagsFirebase.flgBit.flgSendDataFirebase){
+
+		if(updateFirebase(fbdo2, MAC_DEVICE, jsonBuffer)){
+			for(uint8_t i = 0; i < LENGTH_DATA_FIREASE_NUMERIC_SEND; i++){
+				datasFirebaseNumericSend[i] = -1;
+			}
+
+			flagsFirebase.flgBit.flgSendDataFirebase = 0;
+			jsonBuffer.clear();
+		}
+	}
 }
 
 void errorFlags(){
@@ -150,7 +176,9 @@ void errorFlags(){
 
 		if(errorOld != error){
 			regDelayError = regBaseDelayError;
-			flagsCommunication.flgBit.flgSendErrorFirebase = 1;
+
+			flagsFirebase.flgBit.flgAddDataSendFirebase = 1;
+			datasFirebaseNumericSend[LIST_DATA_NUMERIC_SEND[ERRO_PATH_SEND]] = error;
 		}
 		errorOld = error;
 
