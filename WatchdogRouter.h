@@ -50,5 +50,6 @@
 
 	//TODO - Remover
 	extern bool updateFirebase(FirebaseData &fbdo, String path, FirebaseJson &json);
+	extern void splitDataJsonFirebase(FirebaseData &data);
 
 #endif /* _testEspFirebaseCallback_H_ */

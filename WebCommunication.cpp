@@ -79,6 +79,8 @@ void configurationWifi(uint8_t mode, uint8_t tryConnection){
 				flagsCommunication.flgBit.flgTryingConnection = 1;		//habilita a verificacao após a interrupcão se a conexão for bem sucedida
 				flagsCtrlSystem.flgBit.flgSystemStart = 1;
 				WiFi.setAutoReconnect(true);
+
+				Serial.println("Conexao ok");
 			}
 			else{
 				configVariableControlCommunication(false);

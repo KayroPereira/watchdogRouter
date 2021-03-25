@@ -38,7 +38,9 @@
 
 	#include "HardwareAccess.h"
 
-	#define MAC_DEVICE "/34E2C412/share"
+	#define MAC_DEVICE 				"/34E2C412"
+	#define PATH_UPDATE_SHARE 		MAC_DEVICE  "/share"
+	#define PATH_UPDATE_FLG 		MAC_DEVICE "/f"
 
 	//default values of path positions
 	#define DNS1 						0						//dns ping primário

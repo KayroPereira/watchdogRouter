@@ -79,7 +79,7 @@ void setup() {
 //		Serial.println("------------------------------------");
 //		Serial.println();
 //	}
-//
+
 //	Firebase.setStreamCallback(fbdo1, streamCallback, streamTimeoutCallback);
 
 
@@ -206,21 +206,100 @@ void loop() {
 //	    Serial.println(fbdo1.boolData() == 1 ? "true" : "false");
 //	  else if (fbdo1.dataType() == "string")
 //	    Serial.println(fbdo1.stringData());
-//	  else if (fbdo1.dataType() == "json")
+//	  else if (fbdo1.dataType() == "json"){
 //	    Serial.println(fbdo1.jsonString());
+//	    splitDataJsonFirebase(fbdo1);
+//	  }
 //
 //	}
 
 	realTime = millis();
 
 
-	if(realTime - delayButton > 1000){
+	if(realTime - delayButton > 30000){
 
-		Serial.printf("\n\n-------------- setStreamCallback --------------\n\n");
+		Serial.printf("\n\n-------------- Test download Start --------------\n\n");
 
 		delayButton = millis();
 
-		Firebase.setStreamCallback(fbdo1, streamCallback, streamTimeoutCallback);
+		Firebase.endStream(fbdo1);
+
+		firebaseConnection();
+
+
+//		if(Firebase.getInt(fbdo1, PATH_UPDATE_FLG)){
+////		if(Firebase.Stream()){
+//
+////			FirebaseJson &jsonTest = fbdo1.jsonObject();
+//			int flg = fbdo1.intData();
+//
+//			if(flg > 0){
+//				Serial.printf("\nFlag OK -> %d\n", flg);
+//			}else{
+//				Serial.printf("\nFlag NOK -> %d\n", flg);
+//			}
+//		}
+//
+//		Firebase.setStreamCallback(fbdo1, streamCallback, streamTimeoutCallback);
+
+
+//		if(Firebase.getInt(fbdo1, PATH_UPDATE_FLG)){
+//
+//			int flg = fbdo1.intData();
+//
+//			if(flg > 0){
+//
+//				Serial.printf("\nFlag OK -> %d\n", flg);
+//
+//				Firebase.getJSON(fbdo1, PATH_UPDATE_SHARE);
+//
+////				FirebaseJson &jsonTest = fbdo1.jsonObject();
+//
+//				firebaseConnection();
+//
+//				printResult(fbdo1);
+//
+//			}else{
+//				Serial.printf("\nFlag NOK -> %d\n", flg);
+//			}
+//		}
+
+//		Firebase.setStreamCallback(fbdo1, streamCallback, streamTimeoutCallback);
+
+//		firebaseConnection();
+
+		Serial.printf("\n-------------- Test download End --------------\n");
+
+
+//		if(Firebase.getJSON(fbdo1, PATH_UPDATE_SHARE)){
+//			FirebaseJson &jsonTest = fbdo1.jsonObject();
+//
+//			jsonTest.toString(jsonStr, true);
+//
+//			Serial.println(jsonStr);
+//
+//			Firebase.setStreamCallback(fbdo1, streamCallback, streamTimeoutCallback);
+//		}
+//
+//		Firebase.setStreamCallback(fbdo1, streamCallback, streamTimeoutCallback);
+//
+//		Serial.println(Firebase.getJSON(fbdo1, MAC_DEVICE));
+//
+//		Firebase.get(fbdo1, MAC_DEVICE);
+//
+//
+//		jsonGet = fbdo1.jsonObject();
+
+	}
+
+//	if(realTime - delayButton > 1000){
+//
+//		Serial.printf("\n\n-------------- setStreamCallback --------------\n\n");
+//
+//		delayButton = millis();
+
+//		Firebase.setStreamCallback(fbdo1, streamCallback, streamTimeoutCallback);
+
 //		Serial.println(Firebase.getJSON(fbdo1, MAC_DEVICE));
 
 //		Firebase.get(fbdo1, MAC_DEVICE);
@@ -233,7 +312,7 @@ void loop() {
 //
 //		Serial.println(jsonStr);
 
-	}
+//	}
 
 //	if(realTime - delayButton > 30){
 //
@@ -262,36 +341,36 @@ void loop() {
 //		}
 //	}
 //
-	if(sendDataFirebaseFlag){
-		if(realTime - delaySendFirebase > 1000){
-
-			delaySendFirebase = millis();
-
-			if(updateFirebase(fbdo2, MAC_DEVICE, jsonBufferLocal)){
-				jsonBufferLocal.clear();
-
-				sendDataFirebaseFlag = false;
-			}
-		}
-	}
-
-	if (realTime - sendDataPrevMillis > 15000) {
-
-
-//		digitalWrite(OUTPUT_ERRO_LED, !digitalRead(OUTPUT_ERRO_LED));
-
-		sendDataPrevMillis = millis();
-		count++;
-
-		FirebaseJson json;
-
-		Serial.println("------------------------------------");
-		Serial.println("Set JSON...");
-
-		json.set("value", count);
-
-		json.set("test", "dfadl");
-
-		updateFirebase(fbdo2, "/34E2C412", json);
-	}
+//	if(sendDataFirebaseFlag){
+//		if(realTime - delaySendFirebase > 1000){
+//
+//			delaySendFirebase = millis();
+//
+//			if(updateFirebase(fbdo2, MAC_DEVICE, jsonBufferLocal)){
+//				jsonBufferLocal.clear();
+//
+//				sendDataFirebaseFlag = false;
+//			}
+//		}
+//	}
+//
+//	if (realTime - sendDataPrevMillis > 15000) {
+//
+//
+////		digitalWrite(OUTPUT_ERRO_LED, !digitalRead(OUTPUT_ERRO_LED));
+//
+//		sendDataPrevMillis = millis();
+//		count++;
+//
+//		FirebaseJson json;
+//
+//		Serial.println("------------------------------------");
+//		Serial.println("Set JSON...");
+//
+//		json.set("value", count);
+//
+//		json.set("test", "dfadl");
+//
+//		updateFirebase(fbdo2, "/34E2C412", json);
+//	}
 }
