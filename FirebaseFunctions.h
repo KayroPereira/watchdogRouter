@@ -38,9 +38,15 @@
 
 	#include "HardwareAccess.h"
 
-	#define MAC_DEVICE 				"/34E2C412"
-	#define PATH_UPDATE_SHARE 		MAC_DEVICE  "/share"
+	//TODO - Teste Comunicação - Menor transferência de dados - Melhor tempo de sincronismo
+	#define MAC_DEVICE 				"/34E2C413"
+	#define PATH_UPDATE_SHARE 		MAC_DEVICE "/sh"
+	#define PATH_UPDATE_SHARE_FLG	MAC_DEVICE PATH_UPDATE_SHARE "/f"
 	#define PATH_UPDATE_FLG 		MAC_DEVICE "/f"
+
+//	#define MAC_DEVICE 				"/34E2C412"
+//	#define PATH_UPDATE_SHARE 		MAC_DEVICE  "/share"
+//	#define PATH_UPDATE_FLG 		MAC_DEVICE "/f"
 
 	//default values of path positions
 	#define DNS1 						0						//dns ping primário
@@ -108,7 +114,10 @@
 //	const uint8_t LIST_DATA_EEPROM_NUMERIC[] = {ERRO, FAVORITE, HARD_RESET, TIME_HARD_RESET};										//Dados numéricos salvos na EEPROM
 //	const uint8_t LIST_DATA_EEPROM_TEXT[] = {ALIAS, DNS1, DNS2};																	//Dados literais salvos na EEPROM
 
-	const char PATH_FIREBASE[][SIZE_PATH_TEXT] = {"dns1", "dns2", "erro", "hardReset", "timeReset"};								//labels Firebase
+	//TODO - Teste Comunicação - Menor transferência de dados - Melhor tempo de sincronismo
+	const char PATH_FIREBASE[][SIZE_PATH_TEXT] = {"d1", "d2", "er", "hr", "tr"};													//labels Firebase
+
+//	const char PATH_FIREBASE[][SIZE_PATH_TEXT] = {"dns1", "dns2", "erro", "hardReset", "timeReset"};								//labels Firebase
 
 	const uint8_t LIST_DATA_TEXT_EEPROM[] = {DNS1, DNS2};																			//Dados literais salvos na EEPROM
 	const uint8_t LIST_DATA_NUMERIC_EEPROM[] = {ERRO, HARD_RESET, TIME_HARD_RESET};													//Dados numéricos salvos na EEPROM

@@ -11,6 +11,7 @@ FlagsFirebase flagsFirebase;
 
 FirebaseData fbdo1;
 FirebaseData fbdo2;
+FirebaseData fbdo3;
 
 FirebaseJson jsonBuffer;
 
@@ -27,6 +28,15 @@ void loadVariablesFirebase(){
 
 	//Set the size of HTTP response buffers in the case where we want to work with large data.
 	fbdo2.setResponseSize(1024);
+
+
+	//TODO - Teste Comunicação - Menor transferência de dados - Melhor tempo de sincronismo
+
+	//Set the size of WiFi rx/tx buffers in the case where we want to work with large data.
+	fbdo3.setBSSLBufferSize(512, 512);
+
+	//Set the size of HTTP response buffers in the case where we want to work with large data.
+	fbdo3.setResponseSize(1024);
 }
 
 bool firebaseConnection(){
@@ -54,6 +64,20 @@ bool firebaseConnection(){
 	}
 
 	Firebase.setStreamCallback(fbdo1, streamCallback, streamTimeoutCallback);
+
+
+	//TODO - Teste Comunicação - Menor transferência de dados - Melhor tempo de sincronismo
+
+	if (!Firebase.beginStream(fbdo3, PATH_UPDATE_SHARE)) {
+		Serial.println("------------------------------------");
+		Serial.println("Can't begin stream connection...");
+		Serial.println("REASON: " + fbdo3.errorReason());
+		Serial.println("------------------------------------");
+		Serial.println();
+	}
+
+//	Firebase.setStreamCallback(fbdo3, streamCallback, streamTimeoutCallback);
+
 
 	//TODO - Implementar mais tarde
 //	if(firebaseCommStatus()){
