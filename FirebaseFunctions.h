@@ -41,7 +41,7 @@
 	//TODO - Teste Comunicação - Menor transferência de dados - Melhor tempo de sincronismo
 	#define MAC_DEVICE 				"/34E2C413"
 	#define PATH_UPDATE_SHARE 		MAC_DEVICE "/sh"
-	#define PATH_UPDATE_SHARE_FLG	MAC_DEVICE PATH_UPDATE_SHARE "/f"
+	#define PATH_UPDATE_SHARE_FLG	PATH_UPDATE_SHARE "/f"
 	#define PATH_UPDATE_FLG 		MAC_DEVICE "/f"
 
 //	#define MAC_DEVICE 				"/34E2C412"
@@ -115,6 +115,7 @@
 //	const uint8_t LIST_DATA_EEPROM_TEXT[] = {ALIAS, DNS1, DNS2};																	//Dados literais salvos na EEPROM
 
 	//TODO - Teste Comunicação - Menor transferência de dados - Melhor tempo de sincronismo
+//	const char PATH_FIREBASE[][SIZE_PATH_TEXT] = {"tx/d1", "tx/d2", "nr/er", "nr/hr", "nr/tr"};													//labels Firebase
 	const char PATH_FIREBASE[][SIZE_PATH_TEXT] = {"d1", "d2", "er", "hr", "tr"};													//labels Firebase
 
 //	const char PATH_FIREBASE[][SIZE_PATH_TEXT] = {"dns1", "dns2", "erro", "hardReset", "timeReset"};								//labels Firebase
@@ -131,8 +132,12 @@
 	void printResult(FirebaseData &data);
 	void printResult(StreamData &data);
 	void splitDataJsonFirebase(StreamData &data);
+	void addNewDataBufferFirebaseLocal(String key, String value);
+//	void printResult(FirebaseJson data);
+	void printResult(FirebaseJson &data);
 
 
 	extern uint8_t datasFirebaseNumeric[];
+	extern bool offStreamFbd3;
 
 #endif /* FIREBASEFUNCTIONS_H_ */

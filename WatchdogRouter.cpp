@@ -164,6 +164,7 @@ void printStatusButton(const String &name, uint8_t button, uint8_t buttonTemp, u
 	String jsonStr = "";
 	int teste = 0;
 
+	bool offStreamFbd3 = true;
 
 void loop() {
 
@@ -216,15 +217,59 @@ void loop() {
 	realTime = millis();
 
 
-	if(realTime - delayButton > 30000){
+//	bool getStream = false;
+
+//	if(((realTime - delayButton > 6000) || getStream)&& offStreamFbd3){
+	if((realTime - delayButton > 6000) && offStreamFbd3){
 
 		Serial.printf("\n\n-------------- Test download Start --------------\n\n");
-
 		delayButton = millis();
 
-		Firebase.endStream(fbdo1);
+//		if(getStream){
+//
+//		}
 
-		firebaseConnection();
+		if(Firebase.getInt(fbdo3, PATH_UPDATE_SHARE_FLG)){
+
+			int getData = fbdo3.intData();
+
+//			int getData = 0;
+
+//			FirebaseJson &t = fbdo3.jsonObject();
+
+//			String t1;
+
+//			t.toString(t1, true);
+
+
+//			Serial.println(t1);
+//			Serial.println(fbdo3.jsonString());
+
+			Serial.println(getData);
+
+
+			if(getData != 0){
+				offStreamFbd3 = false;
+
+				Firebase.endStream(fbdo1);
+
+				if (!Firebase.beginStream(fbdo1, PATH_UPDATE_SHARE)) {
+					Serial.println("------------------------------------");
+					Serial.println("Can't begin stream connection...");
+					Serial.println("REASON: " + fbdo1.errorReason());
+					Serial.println("------------------------------------");
+					Serial.println();
+				}
+
+				Firebase.setStreamCallback(fbdo1, streamCallback, streamTimeoutCallback);
+			}
+		}
+
+//		delayButton = millis();
+
+//		Firebase.endStream(fbdo1);
+
+//		firebaseConnection();
 
 
 //		if(Firebase.getInt(fbdo1, PATH_UPDATE_FLG)){

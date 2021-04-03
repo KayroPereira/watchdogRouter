@@ -55,6 +55,8 @@ bool firebaseConnection(){
 //		Serial.println();
 //	}
 
+
+
 	if (!Firebase.beginStream(fbdo1, PATH_UPDATE_SHARE)) {
 		Serial.println("------------------------------------");
 		Serial.println("Can't begin stream connection...");
@@ -66,16 +68,20 @@ bool firebaseConnection(){
 	Firebase.setStreamCallback(fbdo1, streamCallback, streamTimeoutCallback);
 
 
+
+
+
+
 	//TODO - Teste Comunicação - Menor transferência de dados - Melhor tempo de sincronismo
 
-	if (!Firebase.beginStream(fbdo3, PATH_UPDATE_SHARE)) {
-		Serial.println("------------------------------------");
-		Serial.println("Can't begin stream connection...");
-		Serial.println("REASON: " + fbdo3.errorReason());
-		Serial.println("------------------------------------");
-		Serial.println();
-	}
-
+//	if (!Firebase.beginStream(fbdo3, PATH_UPDATE_SHARE_FLG)) {
+//		Serial.println("------------------------------------");
+//		Serial.println("Can't begin stream connection...");
+//		Serial.println("REASON: " + fbdo3.errorReason());
+//		Serial.println("------------------------------------");
+//		Serial.println();
+//	}
+//
 //	Firebase.setStreamCallback(fbdo3, streamCallback, streamTimeoutCallback);
 
 
@@ -115,12 +121,54 @@ void streamCallback(StreamData data) {
 
 	flagsFirebase.flgBit.flgFirebaseStartOk = 1;
 
-	splitDataJsonFirebase(data);
+
+	if(data.dataType() == "int"){
+		if(Firebase.getJSON(fbdo1, PATH_UPDATE_SHARE)){
+
+			FirebaseJson &js = fbdo1.jsonObject();
+
+			String temp;
+
+			Serial.printf("\n\nJSON\n\n");
+//			js.toString(temp, true);
+//			Serial.println(temp);
+
+			Serial.println(temp);
+			printResult(js);
+
+			Serial.println();
+			Serial.println("--------------printResult END -----------");
+			Serial.println();
+		}
+	}else{
+//		printResult(data);
+		splitDataJsonFirebase(data);
+	}
+
+
+
 
 	Serial.printf("\n\n------------------------\n\n");
 	for(int i = 0; i < LENGTH_DATA_NUMERIC_EEPROM; i++){
 		Serial.printf("%s: %u\n", PATH_FIREBASE[LIST_DATA_NUMERIC_EEPROM[i]], datasFirebaseNumeric[i]);
 	}
+
+	//FIXME - Desenvolver função
+//	Firebase.set(fbdo2, PATH_UPDATE_SHARE_FLG, 0);
+
+//	if(offStreamFbd3){
+
+		FirebaseJson json;
+
+		json.set("f", 0);
+
+		Firebase.updateNodeSilent(fbdo2, PATH_UPDATE_SHARE, json);
+
+		offStreamFbd3 = true;
+//	}
+
+	//TODO - Inserido para teste
+//	Firebase.endStream(fbdo1);
 }
 
 #define TIME_OUT_MAX	2
@@ -527,8 +575,13 @@ sint8_t findKeyPathFirebase(String keyToFind, const char pathFirebase [][SIZE_PA
 
 void addNewDataBufferFirebaseLocal(String key, String value){
 
-	if(key[0] == '/')
-		key.remove(0, 1);
+	int subPath = key.lastIndexOf('/') + 1;
+	if(subPath > -1){
+		key.remove(0, subPath);
+	}
+
+//	if(key[0] == '/')
+//		key.remove(0, 1);
 
 	int keyFound = findKeyPathFirebase(key, PATH_FIREBASE, LENGTH_PATH_FIREBASE);
 
@@ -541,6 +594,37 @@ void addNewDataBufferFirebaseLocal(String key, String value){
 	}else if(keyFound >= LENGTH_DATA_TEXT_EEPROM && keyFound < (LENGTH_DATA_TEXT_EEPROM + LENGTH_DATA_NUMERIC_EEPROM)){
 		datasFirebaseNumeric[keyFound-LENGTH_DATA_TEXT_EEPROM] = value.toInt();
 	}
+}
+
+void printResult(FirebaseJson &data){
+
+	Serial.println();
+	Serial.println("--------------printResult-----------");
+	Serial.println();
+
+	size_t len = data.iteratorBegin();
+	String key, value = "";
+
+	int type = 0;
+	for (size_t i = 0; i < len; i++) {
+		data.iteratorGet(i, type, key, value);
+
+		Serial.print(i);
+		Serial.print(", ");
+		Serial.print("Type: ");
+		Serial.print(type == FirebaseJson::JSON_OBJECT ? "object" : "array");
+
+		if (type == FirebaseJson::JSON_OBJECT) {
+			Serial.print(", Key: ");
+			Serial.print(key);
+		}
+		Serial.print(", Value: ");
+		Serial.println(value);
+
+		addNewDataBufferFirebaseLocal(key, value);
+//		yield();
+	}
+	data.iteratorEnd();
 }
 
 void splitDataJsonFirebase(StreamData &data) {

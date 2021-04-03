@@ -177,6 +177,7 @@ void errorFlags(){
 		if(errorOld != error){
 			regDelayError = regBaseDelayError;
 
+			//TODO - Criar função para isto
 			flagsFirebase.flgBit.flgAddDataSendFirebase = 1;
 			datasFirebaseNumericSend[LIST_DATA_NUMERIC_SEND[ERRO_PATH_SEND]] = error;
 		}

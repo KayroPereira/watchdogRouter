@@ -50,14 +50,16 @@ void hardwareConfig(){
 	Serial.begin(57600);
 
 	//remover - RODAR APENAS NA PRIMEIRA GRAVAÇÃO - REMOVER APÓS
-//	delay(1000);
-//	writeString(ADDRESS_SSID, "NetWifi##");
-//	writeString(ADDRESS_PASSWORD, "Pedepano21@@##");
-//	_delay(1000);
+	delay(1000);
+	writeString(ADDRESS_SSID, "NetWifi##");
+	writeString(ADDRESS_PASSWORD, "Pedepano21@@##");
+	_delay(1000);
+
 //	delay(1000);
 //	writeString(ADDRESS_SSID, "NetWifi2##");
 //	writeString(ADDRESS_PASSWORD, "Pedepano21@@##");
 //	_delay(1000);
+
 //	delay(1000);
 //	writeString(ADDRESS_SSID, "Kayro##");
 //	writeString(ADDRESS_PASSWORD, "123456789##");

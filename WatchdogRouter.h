@@ -35,6 +35,7 @@
 	extern uint8_t datasFirebaseNumericLocal[];
 	extern FirebaseData fbdo1;
 	extern FirebaseData fbdo2;
+	extern FirebaseData fbdo3;
 
 
 	extern void hardwareConfig();
