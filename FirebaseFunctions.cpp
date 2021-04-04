@@ -127,18 +127,18 @@ void streamCallback(StreamData data) {
 
 			FirebaseJson &js = fbdo1.jsonObject();
 
-			String temp;
+//			String temp;
 
-			Serial.printf("\n\nJSON\n\n");
+//			Serial.printf("\n\nJSON\n\n");
 //			js.toString(temp, true);
 //			Serial.println(temp);
 
-			Serial.println(temp);
+//			Serial.println(temp);
 			printResult(js);
 
-			Serial.println();
-			Serial.println("--------------printResult END -----------");
-			Serial.println();
+//			Serial.println();
+//			Serial.println("--------------printResult END -----------");
+//			Serial.println();
 		}
 	}else{
 //		printResult(data);
@@ -596,11 +596,11 @@ void addNewDataBufferFirebaseLocal(String key, String value){
 	}
 }
 
-void printResult(FirebaseJson &data){
+void splitDataJsonFirebase(FirebaseJson &data){
 
-	Serial.println();
-	Serial.println("--------------printResult-----------");
-	Serial.println();
+//	Serial.println();
+//	Serial.println("--------------printResult-----------");
+//	Serial.println();
 
 	size_t len = data.iteratorBegin();
 	String key, value = "";
@@ -609,17 +609,17 @@ void printResult(FirebaseJson &data){
 	for (size_t i = 0; i < len; i++) {
 		data.iteratorGet(i, type, key, value);
 
-		Serial.print(i);
-		Serial.print(", ");
-		Serial.print("Type: ");
-		Serial.print(type == FirebaseJson::JSON_OBJECT ? "object" : "array");
+//		Serial.print(i);
+//		Serial.print(", ");
+//		Serial.print("Type: ");
+//		Serial.print(type == FirebaseJson::JSON_OBJECT ? "object" : "array");
 
-		if (type == FirebaseJson::JSON_OBJECT) {
-			Serial.print(", Key: ");
-			Serial.print(key);
-		}
-		Serial.print(", Value: ");
-		Serial.println(value);
+//		if (type == FirebaseJson::JSON_OBJECT) {
+//			Serial.print(", Key: ");
+//			Serial.print(key);
+//		}
+//		Serial.print(", Value: ");
+//		Serial.println(value);
 
 		addNewDataBufferFirebaseLocal(key, value);
 //		yield();
@@ -647,52 +647,57 @@ void splitDataJsonFirebase(StreamData &data) {
 	}else if (data.dataType() == "json") {
 		Serial.println();
 
-		FirebaseJson *json = data.jsonObjectPtr();
+//		FirebaseJson *json = data.jsonObjectPtr();
+		FirebaseJson &json = data.jsonObject();
 
 		//Print all object data
 		Serial.printf("\n\n-------------------splitDataJsonFirebase-------------------\n\n");
+		splitDataJsonFirebase(json);
 
-//		String jsonStr;
+////		String jsonStr;
+////
+////		json->toString(jsonStr, true);
+////
+////		Serial.println(jsonStr);
+////		Serial.println();
+////		Serial.println("Iterate JSON data:");
+////		Serial.println();
 //
-//		json->toString(jsonStr, true);
 //
-//		Serial.println(jsonStr);
-//		Serial.println();
-//		Serial.println("Iterate JSON data:");
-//		Serial.println();
-
-
-		size_t len = json->iteratorBegin();
-		String key, value = "";
-		int type = 0;
-
-		for (size_t i = 0; i < len; i++) {
-			json->iteratorGet(i, type, key, value);
-			Serial.print(i);
-			Serial.print(", ");
-			Serial.print("Type: ");
-			Serial.print(type == FirebaseJson::JSON_OBJECT ? "object" : "array");
-
-			if (type == FirebaseJson::JSON_OBJECT) {
-				Serial.print(", Key: ");
-				Serial.print(key);
-			}
-			Serial.print(", Value: ");
-			Serial.println(value);
-
-			addNewDataBufferFirebaseLocal(key, value);
-
-//			int keyFound = findKeyPathFirebase(key, PATH_FIREBASE, LENGTH_PATH_FIREBASE);
-//			if(keyFound > -1 && keyFound < LENGTH_DATA_TEXT_EEPROM){
+////		size_t len = json->iteratorBegin();
+//		size_t len = json.iteratorBegin();
+//		String key, value = "";
+//		int type = 0;
 //
-//				//FIXME - desenvolver para string
-//				keyFound = -2;
-//			}else if(keyFound >= LENGTH_DATA_TEXT_EEPROM && keyFound < (LENGTH_DATA_TEXT_EEPROM + LENGTH_DATA_NUMERIC_EEPROM)){
-//				datasFirebaseNumeric[keyFound-LENGTH_DATA_TEXT_EEPROM] = value.toInt();
+//		for (size_t i = 0; i < len; i++) {
+////			json->iteratorGet(i, type, key, value);
+//			json.iteratorGet(i, type, key, value);
+//			Serial.print(i);
+//			Serial.print(", ");
+//			Serial.print("Type: ");
+//			Serial.print(type == FirebaseJson::JSON_OBJECT ? "object" : "array");
+//
+//			if (type == FirebaseJson::JSON_OBJECT) {
+//				Serial.print(", Key: ");
+//				Serial.print(key);
 //			}
-		}
-
-		json->iteratorEnd();
+//			Serial.print(", Value: ");
+//			Serial.println(value);
+//
+//			addNewDataBufferFirebaseLocal(key, value);
+//
+////			int keyFound = findKeyPathFirebase(key, PATH_FIREBASE, LENGTH_PATH_FIREBASE);
+////			if(keyFound > -1 && keyFound < LENGTH_DATA_TEXT_EEPROM){
+////
+////				//FIXME - desenvolver para string
+////				keyFound = -2;
+////			}else if(keyFound >= LENGTH_DATA_TEXT_EEPROM && keyFound < (LENGTH_DATA_TEXT_EEPROM + LENGTH_DATA_NUMERIC_EEPROM)){
+////				datasFirebaseNumeric[keyFound-LENGTH_DATA_TEXT_EEPROM] = value.toInt();
+////			}
+//		}
+//
+////		json->iteratorEnd();
+//		json.iteratorEnd();
 
 
 	}
